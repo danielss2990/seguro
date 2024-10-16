@@ -19,5 +19,8 @@ public class SeguroContext : DbContext
         modelBuilder.Entity<Garantia>().HasKey(g => g.Id);
         modelBuilder.Entity<Venda>().HasKey(v => v.Id);
         modelBuilder.Entity<ItemVenda>().HasKey(iv => iv.Id);
+
+        modelBuilder.Entity<ItemVenda>().HasOne(it => it.Garantia).WithOne().HasForeignKey<ItemVenda>(it => it.IdGarantia).HasPrincipalKey<Garantia>(g => g.Id);
+        modelBuilder.Entity<ItemVenda>().HasOne(it => it.Produto).WithOne().HasForeignKey<ItemVenda>(it => it.IdProduto).HasPrincipalKey<Produto>(p => p.Id);
     }
 }
