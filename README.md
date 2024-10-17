@@ -25,7 +25,7 @@ git clone https://github.com/danielss2990/seguro.git
 ### 2. Navegar até o Diretório do Projeto
 Após clonar o repositório, navegue até o diretório do projeto:
 ```bash
-cd seu-repositorio
+cd seguro
 ```
 
 ### 3. Restaurar as Dependências
