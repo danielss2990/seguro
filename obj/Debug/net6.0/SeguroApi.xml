@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SeguroApi</name>
+    </assembly>
+    <members>
+        <member name="T:SeguroApi.Controllers.GarantiaController">
+            <summary>
+            Controlador responsável pelas operações relacionadas às garantias.
+            </summary>
+        </member>
+        <member name="M:SeguroApi.Controllers.GarantiaController.#ctor(SeguroContext)">
+            <summary>
+            Inicializa uma nova instância do <see cref="T:SeguroApi.Controllers.GarantiaController"/>.
+            </summary>
+            <param name="context">Contexto do banco de dados.</param>
+        </member>
+        <member name="M:SeguroApi.Controllers.GarantiaController.AdicionaGarantia(SeguroApi.Data.Dto.GarantiaCreateDTO)">
+            <summary>
+            Adiciona uma nova garantia ao banco de dados.
+            </summary>
+            <param name="garantiaDTO">Objeto contendo os dados da garantia.</param>
+            <returns>A garantia criada.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.GarantiaController.RecuperaGarantias(System.Int32,System.Int32)">
+            <summary>
+            Recupera uma lista de garantias com suporte à paginação.
+            </summary>
+            <param name="skip">Número de itens a ignorar.</param>
+            <param name="take">Número de itens a retornar.</param>
+            <returns>Uma lista de garantias.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.GarantiaController.RecuperaGarantiaPorId(System.Guid)">
+            <summary>
+            Recupera uma garantia específica pelo ID.
+            </summary>
+            <param name="id">ID da garantia a ser recuperada.</param>
+            <returns>A garantia encontrada ou NotFound se não existir.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.GarantiaController.UpdateGarantia(System.Guid,SeguroApi.Data.Dto.GarantiaUpdateDTO)">
+            <summary>
+            Atualiza as informações de uma garantia existente.
+            </summary>
+            <param name="id">ID da garantia a ser atualizada.</param>
+            <param name="garantiaDTO">Objeto contendo os novos dados da garantia.</param>
+            <returns>A garantia atualizada ou NotFound se não for encontrada.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.GarantiaController.DeleteGarantia(System.Guid)">
+            <summary>
+            Exclui uma garantia do banco de dados.
+            </summary>
+            <param name="id">ID da garantia a ser excluída.</param>
+            <returns>NoContent se a exclusão for bem-sucedida ou NotFound se a garantia não for encontrada.</returns>
+        </member>
+        <member name="T:SeguroApi.Controllers.ProdutoController">
+            <summary>
+            Controlador responsável pelas operações relacionadas aos produtos.
+            </summary>
+        </member>
+        <member name="M:SeguroApi.Controllers.ProdutoController.#ctor(SeguroContext)">
+            <summary>
+            Inicializa uma nova instância do <see cref="T:SeguroApi.Controllers.ProdutoController"/> com o contexto do banco de dados.
+            </summary>
+            <param name="context">Contexto do banco de dados.</param>
+        </member>
+        <member name="M:SeguroApi.Controllers.ProdutoController.AdicionaProduto(SeguroApi.Data.Dto.ProdutoDTO)">
+            <summary>
+            Adiciona um novo produto ao banco de dados.
+            </summary>
+            <param name="produtoDto">Objeto contendo os dados do produto a serem adicionados.</param>
+            <returns>O produto criado.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.ProdutoController.RecuperaProdutos(System.Int32,System.Int32)">
+            <summary>
+            Recupera uma lista de produtos com suporte à paginação.
+            </summary>
+            <param name="skip">Número de itens a ignorar.</param>
+            <param name="take">Número de itens a retornar.</param>
+            <returns>Uma lista de produtos.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.ProdutoController.RecuperaProdutoPorId(System.Guid)">
+            <summary>
+            Recupera um produto específico pelo ID.
+            </summary>
+            <param name="id">ID do produto a ser recuperado.</param>
+            <returns>O produto encontrado ou NotFound se não existir.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.ProdutoController.UpdateProduto(System.Guid,SeguroApi.Data.Dto.ProdutoDTO)">
+            <summary>
+            Atualiza as informações de um produto existente.
+            </summary>
+            <param name="id">ID do produto a ser atualizado.</param>
+            <param name="produtoDto">Objeto contendo os novos dados do produto.</param>
+            <returns>O produto atualizado ou NotFound se não for encontrado.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.ProdutoController.DeleteProduto(System.Guid)">
+            <summary>
+            Exclui um produto do banco de dados.
+            </summary>
+            <param name="id">ID do produto a ser excluído.</param>
+            <returns>NoContent se a exclusão for bem-sucedida ou NotFound se o produto não for encontrado.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.VendaController.AdicionaVenda(SeguroApi.DTOs.VendaDTO)">
+            <summary>
+            Adiciona uma nova venda.
+            </summary>
+            <param name="vendaDto">Dados da venda a ser adicionada.</param>
+            <returns>A venda criada ou erros de validação.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.VendaController.RecuperaVendas(System.Int32,System.Int32)">
+            <summary>
+            Recupera uma lista de vendas paginada.
+            </summary>
+            <param name="skip">Número de vendas a pular.</param>
+            <param name="take">Número máximo de vendas a retornar.</param>
+            <returns>Lista de vendas paginada.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.VendaController.RecuperaVendaPorId(System.Guid)">
+            <summary>
+            Recupera uma venda específica pelo ID.
+            </summary>
+            <param name="id">ID da venda a ser recuperada.</param>
+            <returns>A venda encontrada ou erro 404.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.VendaController.AtualizaVenda(System.Guid,SeguroApi.DTOs.VendaDTO)">
+            <summary>
+            Atualiza uma venda existente.
+            </summary>
+            <param name="id">ID da venda a ser atualizada.</param>
+            <param name="vendaDto">Novos dados da venda.</param>
+            <returns>A venda atualizada ou erro 404.</returns>
+        </member>
+        <member name="M:SeguroApi.Controllers.VendaController.DeletaVenda(System.Guid)">
+            <summary>
+            Exclui uma venda pelo ID.
+            </summary>
+            <param name="id">ID da venda a ser excluída.</param>
+            <returns>Status 204 ou erro 404.</returns>
+        </member>
+    </members>
+</doc>
