@@ -62,6 +62,8 @@ namespace SeguroApi.Controllers
                 ValorTotal = vendaDto.ValorTotal
             };
 
+        
+
             // Adicione a venda ao banco de dados
             _context.Vendas.Add(venda);
             _context.SaveChanges();
