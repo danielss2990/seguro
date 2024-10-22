@@ -29,21 +29,54 @@ namespace SeguroApi.Controllers
             // Verifique se a lista de itens não está vazia
             if (vendaDto.Itens == null || !vendaDto.Itens.Any())
             {
-                return BadRequest("Lista de itens vazia");
+                return BadRequest("Lista de itens vazia.");
             }
 
-            // Verifique se todos os itens da lista possuem um ID de produto
+            // Verifique se todos os itens possuem um ID de produto
             if (!vendaDto.Itens.All(item => item.IdProduto != Guid.Empty))
             {
-                return BadRequest("ID de produto não informado para algum item");
+                return BadRequest("ID de produto não informado para algum item.");
             }
 
-            // Verifique se todos os itens da lista possuem um produto cadastrado
-            var produtosIds = _context.Produtos.Select(p => p.Id).ToList();
-            var itensSemProduto = vendaDto.Itens.Where(item => !produtosIds.Contains(item.IdProduto));
-            if (itensSemProduto.Any())
+            // Obter os produtos cadastrados e organizar por ID
+            var produtos = _context.Produtos.ToDictionary(p => p.Id, p => p.Valor);
+
+            // Verificar se todos os itens possuem produtos cadastrados e se o valor unitário está correto
+            foreach (var item in vendaDto.Itens)
             {
-                return BadRequest($"Produtos não cadastrados para os itens: {string.Join(", ", itensSemProduto.Select(i => i.IdProduto))}");
+                if (!produtos.ContainsKey(item.IdProduto))
+                {
+                    return BadRequest($"Produto não cadastrado para o item: {item.IdProduto}");
+                }
+
+                var valorUnitarioCadastrado = produtos[item.IdProduto];
+                if (item.ValorUnitario != valorUnitarioCadastrado)
+                {
+                    return BadRequest($"O valor unitário do produto {item.IdProduto} está incorreto. " +
+                                      $"Esperado: {valorUnitarioCadastrado}, Recebido: {item.ValorUnitario}");
+                }
+
+                // Verificar se o valor total do item está correto
+                var valorTotalCalculado = item.Quantidade * item.ValorUnitario;
+                if (item.ValorTotal != valorTotalCalculado)
+                {
+                    return BadRequest($"O valor total do item {item.IdProduto} está incorreto. " +
+                                      $"Esperado: {valorTotalCalculado}, Recebido: {item.ValorTotal}");
+                }
+            }
+
+            // Calcular o valor total esperado da venda
+            var valorTotalCalculadoVenda = vendaDto.Itens.Sum(item => item.ValorTotal);
+            if (vendaDto.ValorTotal != valorTotalCalculadoVenda)
+            {
+                return BadRequest($"O valor total da venda está incorreto. " +
+                                  $"Esperado: {valorTotalCalculadoVenda}, Recebido: {vendaDto.ValorTotal}");
+            }
+
+            // Verifica se o valor total é maior que zero
+            if (vendaDto.ValorTotal <= 0)
+            {
+                return BadRequest("O valor total deve ser maior que zero.");
             }
 
             // Mapeie o VendaDTO para um objeto Venda
@@ -52,7 +85,7 @@ namespace SeguroApi.Controllers
                 Id = Guid.NewGuid(),
                 Itens = vendaDto.Itens.Select(item => new ItemVenda
                 {
-                    Id = Guid.NewGuid(), // Gerar um novo ID para o ItemVenda
+                    Id = Guid.NewGuid(),
                     IdProduto = item.IdProduto,
                     IdGarantia = item.IdGarantia,
                     Quantidade = item.Quantidade,
@@ -61,8 +94,6 @@ namespace SeguroApi.Controllers
                 }).ToList(),
                 ValorTotal = vendaDto.ValorTotal
             };
-
-        
 
             // Adicione a venda ao banco de dados
             _context.Vendas.Add(venda);
@@ -86,6 +117,7 @@ namespace SeguroApi.Controllers
 
             return CreatedAtAction(nameof(RecuperaVendaPorId), new { id = venda.Id }, responseDto);
         }
+
 
         /// <summary>
         /// Recupera uma lista de vendas paginada.

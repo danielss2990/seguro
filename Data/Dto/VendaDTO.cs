@@ -13,7 +13,5 @@ namespace SeguroApi.DTOs
 
         [Range(0.01, double.MaxValue, ErrorMessage = "O valor total deve ser maior que zero.")]
         public decimal ValorTotal { get; set; }
-
-      
     }
 }
